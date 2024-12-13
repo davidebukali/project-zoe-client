@@ -35,7 +35,9 @@ const UpdatePasswordConfirmation = React.lazy(
 const EventDetails = React.lazy(() => import('./events/details/EventDetails'));
 const EventReports = React.lazy(() => import('./events/EventReports'));
 const Help = React.lazy(() => import('./help/Help'));
-const ManageHelp = React.lazy(() => import('./admin/manageHelp/HelpFileDisplay'));
+const ManageHelp = React.lazy(
+  () => import('./admin/manageHelp/HelpFileDisplay'),
+);
 
 const MailChat = React.lazy(() => import('./messaging/MailChat'));
 const ReportFields = React.lazy(
@@ -46,7 +48,9 @@ const GroupCategories = React.lazy(
   () => import('./admin/groupCategories/groupCategories'),
 );
 
-const EventActivitiesForm = React.lazy(() => import('./events/details/EventActivitiesForm'));
+const EventActivitiesForm = React.lazy(
+  () => import('./events/details/EventActivitiesForm'),
+);
 const EventCategories = React.lazy(
   () => import('./admin/eventsCategories/EventCategories'),
 );
@@ -88,6 +92,13 @@ const ContentSwitch = () => {
         ]) && <Route path={localRoutes.users} component={UserControl} />}
 
         {hasAnyRole(user, [
+          appPermissions.roleUserEdit,
+          appPermissions.roleUserView,
+        ]) && (
+          <Route path={localRoutes.reportSalvations} component={UserControl} />
+        )}
+
+        {hasAnyRole(user, [
           appPermissions.roleGroupEdit,
           appPermissions.roleGroupView,
         ]) && (
@@ -111,23 +122,32 @@ const ContentSwitch = () => {
           appPermissions.roleEventEdit,
         ]) && <Route path={localRoutes.events} component={EventReports} />}
 
-        {hasAnyRole(user, [
-          appPermissions.roleReportView,
-        ]) && <Route path={localRoutes.reportSubmit} component={ReportSubmissionForm} />}
+        {hasAnyRole(user, [appPermissions.roleReportView]) && (
+          <Route
+            path={localRoutes.reportSubmit}
+            component={ReportSubmissionForm}
+          />
+        )}
 
-        {hasAnyRole(user, [
-          appPermissions.roleReportViewSubmissions,
-        ]) && <Route path={localRoutes.reportSubmissionDetails} component={ReportSubmissionDetail} />}
+        {hasAnyRole(user, [appPermissions.roleReportViewSubmissions]) && (
+          <Route
+            path={localRoutes.reportSubmissionDetails}
+            component={ReportSubmissionDetail}
+          />
+        )}
 
-        {hasAnyRole(user, [
-          appPermissions.roleReportViewSubmissions,
-        ]) && <Route path={localRoutes.reportSubmissions} component={ReportSubmissions} />}
+        {hasAnyRole(user, [appPermissions.roleReportViewSubmissions]) && (
+          <Route
+            path={localRoutes.reportSubmissions}
+            component={ReportSubmissions}
+          />
+        )}
 
-        {hasAnyRole(user, [
-          appPermissions.roleReportView,
-        ]) && <Route path={localRoutes.reports} component={ReportList} />}
+        {hasAnyRole(user, [appPermissions.roleReportView]) && (
+          <Route path={localRoutes.reports} component={ReportList} />
+        )}
 
-         <Route path={localRoutes.manageHelp} component={ManageHelp} />
+        <Route path={localRoutes.manageHelp} component={ManageHelp} />
 
         <Route path={localRoutes.settings} component={Settings} />
         <Route
@@ -136,7 +156,10 @@ const ContentSwitch = () => {
         />
         <Route path={localRoutes.reportCategories} component={ReportFields} />
 
-        <Route path={localRoutes.eventActivities} component={EventActivitiesForm} />
+        <Route
+          path={localRoutes.eventActivities}
+          component={EventActivitiesForm}
+        />
 
         <Route path={localRoutes.eventCategories} component={EventCategories} />
 

@@ -11,6 +11,7 @@ import ReportList from './reports/ReportList';
 import ReportSubmissions from './reports/ReportSubmissionsList';
 import ReportSubmissionDetail from './reports/ReportSubmissionDetail';
 import ReportSubmissionForm from './reports/ReportSubmissionForm';
+import ReviewSalvations from './reports/ReviewSalvations';
 // const Events= React.lazy(() => import( "./events/EventsList"));
 // const GroupReports = React.lazy(() => import("./events/GroupEvents"));
 
@@ -95,7 +96,10 @@ const ContentSwitch = () => {
           appPermissions.roleUserEdit,
           appPermissions.roleUserView,
         ]) && (
-          <Route path={localRoutes.reportSalvations} component={UserControl} />
+          <Route
+            path={localRoutes.reportSalvations}
+            component={ReviewSalvations}
+          />
         )}
 
         {hasAnyRole(user, [
